@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gemini CLI 一頁式介紹</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-primary: #05060f;
+        --bg-secondary: rgba(9, 12, 34, 0.85);
+        --accent: #39d9ff;
+        --accent-soft: rgba(57, 217, 255, 0.24);
+        --text-main: #e9f0ff;
+        --text-muted: #7b89b7;
+        --border: rgba(130, 156, 255, 0.24);
+        --shadow: 0 20px 40px rgba(7, 12, 42, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", "Microsoft JhengHei", sans-serif;
+        background: radial-gradient(circle at top left, rgba(57, 217, 255, 0.12), transparent 55%), radial-gradient(circle at bottom right, rgba(148, 64, 255, 0.18), transparent 50%), var(--bg-primary);
+        color: var(--text-main);
+        line-height: 1.6;
+      }
+
+      header {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 88px 24px 72px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 48px;
+        align-items: center;
+      }
+
+      .hero-copy h1 {
+        font-family: "Orbitron", "Inter", sans-serif;
+        font-size: clamp(2.5rem, 5vw, 3.4rem);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin: 0 0 24px;
+      }
+
+      .hero-copy p {
+        font-size: 1.07rem;
+        margin: 0 0 32px;
+        color: var(--text-muted);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .cta {
+        padding: 14px 28px;
+        border-radius: 999px;
+        border: 1px solid var(--accent);
+        color: var(--bg-primary);
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        position: relative;
+        background: linear-gradient(135deg, #39d9ff, #8b5aff);
+        box-shadow: 0 12px 28px rgba(59, 120, 255, 0.45);
+      }
+
+      .cta-secondary {
+        color: var(--accent);
+        border: 1px solid var(--border);
+        background: transparent;
+        box-shadow: inset 0 0 0 1px rgba(57, 217, 255, 0.22);
+      }
+
+      .terminal {
+        background: rgba(5, 8, 24, 0.86);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .terminal::before {
+        content: "TERMINAL";
+        display: inline-block;
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+
+      code,
+      pre {
+        font-family: "Fira Code", "JetBrains Mono", "Courier New", monospace;
+      }
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        background: rgba(10, 15, 40, 0.9);
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(57, 217, 255, 0.18);
+        color: #d6e2ff;
+      }
+
+      main {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 24px 96px;
+        display: grid;
+        gap: 64px;
+      }
+
+      section {
+        background: rgba(7, 10, 32, 0.82);
+        border-radius: 22px;
+        padding: 40px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(20px);
+      }
+
+      section h2 {
+        font-family: "Orbitron", "Inter", sans-serif;
+        font-size: 1.75rem;
+        letter-spacing: 0.12em;
+        margin: 0 0 24px;
+        text-transform: uppercase;
+      }
+
+      .grid {
+        display: grid;
+        gap: 28px;
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--text-muted);
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pill-list li {
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: rgba(57, 217, 255, 0.14);
+        border: 1px solid rgba(57, 217, 255, 0.18);
+        color: var(--text-main);
+        font-size: 0.9rem;
+      }
+
+      footer {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 24px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 640px) {
+        header {
+          padding-top: 64px;
+        }
+
+        section {
+          padding: 32px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="hero-copy">
+        <div class="chip">Gemini CLI</div>
+        <h1>Futuristic Terminal Intelligence</h1>
+        <p>
+          Gemini CLI 是 Google 開源的終端機 AI 助理，讓你以最短路徑連接 Gemini 2.5 Pro。使用者可在終端內串接搜尋、檔案操作、Shell 指令與網頁抓取，並透過 MCP 擴充自訂工具。
+        </p>
+        <div class="hero-actions">
+          <a class="cta" href="https://github.com/google-gemini/gemini-cli">立即體驗</a>
+          <a class="cta cta-secondary" href="https://www.npmjs.com/package/@google/gemini-cli">NPM 套件資訊</a>
+        </div>
+      </div>
+      <div class="terminal">
+        <pre><code>$ npx https://github.com/google-gemini/gemini-cli
+$ gemini
+> 幫我摘要昨天合併的 PR 變更</code></pre>
+      </div>
+    </header>
+    <main>
+      <section>
+        <h2>核心亮點</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>開箱即用的開發力</h3>
+            <ul>
+              <li>免費額度：Google 帳號享 60 requests/min、每日 1,000 requests。</li>
+              <li>一次擁有 100 萬 Token 的 Gemini 2.5 Pro 模型上下文。</li>
+              <li>專為終端機設計的工作流程，支援 Shell 指令與檔案操作。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>可擴充的 AI 代理人</h3>
+            <ul>
+              <li>內建 Google Search、Web Fetch 等工具，獲得即時資訊。</li>
+              <li>透過 Model Context Protocol 串接自訂服務，打造專屬工具鏈。</li>
+              <li>提供會話檢查點與 GEMINI.md，自訂專案專屬語境。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>快速安裝</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>立即啟動</h3>
+            <pre><code># 無需安裝，直接使用
+npx https://github.com/google-gemini/gemini-cli
+
+# npm 全域安裝
+npm install -g @google/gemini-cli
+
+# Homebrew (macOS / Linux)
+brew install gemini-cli</code></pre>
+          </div>
+          <div>
+            <h3>系統需求</h3>
+            <ul>
+              <li>Node.js 20 以上版本。</li>
+              <li>適用 macOS、Linux、Windows 作業系統。</li>
+              <li>支援 Preview / Stable / Nightly 三種發佈頻率。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>發佈節奏</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>Preview</h3>
+            <p>每週二 23:59 (UTC) 推出週更 Preview，快速體驗最新功能。</p>
+          </div>
+          <div>
+            <h3>Stable</h3>
+            <p>每週二 20:00 (UTC) 推出正式版，整合上一週 Preview 與修正。</p>
+          </div>
+          <div>
+            <h3>Nightly</h3>
+            <p>每日 00:00 (UTC) 推出 Nightly，直接跟上 main 分支的最新變更。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>進階能力</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>程式理解與生成</h3>
+            <ul>
+              <li>理解與重構大型程式碼庫。</li>
+              <li>多模態生成：從 PDF、影像或草圖打造應用。</li>
+              <li>自然語言除錯與說明。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>自動化與整合</h3>
+            <ul>
+              <li>在腳本或 CI 中無頭模式運行，提升自動化效率。</li>
+              <li>透過 MCP 連結 GitHub、Slack、資料庫等服務。</li>
+              <li>GitHub Action 整合：審查 PR、議題分類、隨呼隨到。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>認證選項</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>個人與快速試用</h3>
+            <ul>
+              <li>使用 Google 帳號即可獲得免費額度。</li>
+              <li>支援 API Key 或 OAuth，不同場景快速切換。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>企業級控管</h3>
+            <ul>
+              <li>服務帳戶支援安全分級的工作流程。</li>
+              <li>結合受信任資料夾與沙盒策略，控管指令權限。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>資源連結</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>文件導覽</h3>
+            <ul>
+              <li>快速上手：Docs/get-started 系列。</li>
+              <li>CLI 指令參考與自訂指令指南。</li>
+              <li>工具與擴充：內建工具、MCP Server、Extension。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>支援與社群</h3>
+            <ul>
+              <li>Roadmap 與 Changelog 掌握進展。</li>
+              <li>常見問題與除錯手冊。</li>
+              <li>透過 /bug 指令或 GitHub Issues 回報問題。</li>
+            </ul>
+          </div>
+        </div>
+        <ul class="pill-list">
+          <li><a href="https://github.com/google-gemini/gemini-cli" style="color: inherit; text-decoration: none;">GitHub</a></li>
+          <li><a href="https://github.com/google-github-actions/run-gemini-cli" style="color: inherit; text-decoration: none;">GitHub Action</a></li>
+          <li><a href="https://www.npmjs.com/package/@google/gemini-cli" style="color: inherit; text-decoration: none;">NPM</a></li>
+          <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md" style="color: inherit; text-decoration: none;">Quickstart</a></li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      Built with <span style="color: var(--accent);">Gemini</span> energy — 由 Google 與開源社群共同打造
+    </footer>
+  </body>
+</html>
