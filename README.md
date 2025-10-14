@@ -1,6 +1,8 @@
 # VibeCodingGeminiCLI
 Vibe Coding Gemini CLI - Gemini CLI (Command Line Interface) 是 Google 推出的一款**開源 AI 代理**，它將強大的 Gemini 模型直接帶入您的**終端機 (Terminal)**，讓開發人員和其他使用者能夠透過**自然語言**來完成各種任務。
 
+![gemini-screenshot](./images/gemini-screenshot.png)
+
 **主要特色與功能：**
 
 1.  **AI 程式碼助手 (Code Assistant)：**
